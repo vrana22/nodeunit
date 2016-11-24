@@ -84,7 +84,32 @@ exports.testRunFiles = setup(function (test) {
     );
 });
 
-
+exports.testRunFilesEmpty = function (test) {
+    test.expect(3);
+    nodeunit.runFiles([], {
+        moduleStart: function () {
+            test.ok(false, 'should not be called');
+        },
+        testDone: function () {
+            test.ok(false, 'should not be called');
+        },
+        testReady: function () {
+            test.ok(false, 'should not be called');
+        },
+        testStart: function () {
+            test.ok(false, 'should not be called');
+        },
+        log: function () {
+            test.ok(false, 'should not be called');
+        },
+        done: function (assertions) {
+            test.equals(assertions.failures(), 0, 'failures');
+            test.equals(assertions.length, 0, 'length');
+            test.ok(typeof assertions.duration === "number");
+            test.done();
+        }
+    });
+};
 
 exports.testEmptyDir = function (test) {
     var dir2 = __dirname + '/fixtures/dir2';
